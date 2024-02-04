@@ -11,6 +11,10 @@ public class Benutzer {
         this.settings = settings;
     }
 
+    public Benutzer(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
