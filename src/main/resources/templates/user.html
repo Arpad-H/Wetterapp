@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text = "${user}"></title>
+</head>
+<body>
+<h1 th:text = "'This is the User: '+ ${user} "></h1>
+<label for="user">Choose a User:</label>
+
+<select name="user" id="user">
+    <option value="Jan">Jan</option>
+    <option value="Alex">Alex</option>
+    <option value="Arpad">Arpad</option>
+</select>
+<button onclick="submitForm()">Load User</button>
+
+<script>
+    function submitForm() {
+        var selectedUser = document.getElementById("user").value;
+        window.location.href = "/user?user=" + selectedUser;
+    }
+</script>
+<h3>Hier Orte Auflisten </h3>
+</body>
+</html>
