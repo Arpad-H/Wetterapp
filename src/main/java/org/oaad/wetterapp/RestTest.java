@@ -16,7 +16,7 @@ public class RestTest {
     @GetMapping("/restTest")
     @ResponseBody
     public ResponseEntity<String> getJsonFromApi() {
-        String apiUrl = "https://api.open-meteo.com/v1/dwd-icon?latitude=52.2726&longitude=8.0498&hourly=temperature_2m"; // Replace with your API URL
+        String apiUrl = "[API_URL]";
 
         return restTemplate.getForEntity(apiUrl, String.class);
     }
