@@ -14,7 +14,8 @@ import java.util.HashMap;
 @Controller
 public class WetterappIndex {
 
-
+    @Autowired
+    private RestTemplate restTemplate;
     @GetMapping("/hello")
     @ResponseBody
     public String Hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -28,23 +29,15 @@ public class WetterappIndex {
     @GetMapping("/user")
     public String User(@RequestParam(value = "user", defaultValue = "World") String user,Model model) {
         MockDB mockDB = new MockDB();
-       /* Benutzer mockUser = new Benutzer("Jan",new HashMap<String, Boolean>());
-        Benutzer mockUser1 = new Benutzer("Alex",new HashMap<String, Boolean>());
-        Benutzer mockUser2 = new Benutzer("Arpad",new HashMap<String, Boolean>());*/
         HashMap<String, Benutzer> mockMap = new HashMap<String, Benutzer>();
-        /*mockMap.put("Jan",mockUser);
-        mockMap.put("Alex",mockUser1);
-        mockMap.put("Arpad",mockUser2);*/
         mockMap.put("Jan", mockDB.getUser("Jan"));
         mockMap.put("Alex", mockDB.getUser("Alex"));
         mockMap.put("Arpad", mockDB.getUser("Arpad"));
 
         model.addAttribute("user", mockMap.get(user).getName());
 
-        ApiCaller api = new ApiCaller();
+        ApiCaller api = new ApiCaller(restTemplate);
         model.addAttribute("weatherData", api.getJson(mockMap.get(user)));
-
-        System.out.println(model.getAttribute("weatherData"));
 
         return "user";
     }

@@ -35,28 +35,28 @@ public class MockDB {
 
     public Ort getOrt(int ortId){
         double latitude, longitude;
-        switch(ortId){
-            case 0 : // Osnabrück
+        longitude = switch (ortId) {
+            case 0 -> {
                 latitude = 52.2726;
-                longitude = 8.0498;
-                break;
-            case 1: //Münster
+                yield 8.0498; // Osnabrück
+            }
+            case 1 -> {
                 latitude = 51.9624;
-                longitude = 7.6257;
-                break;
-            case 2: //Hamburg
+                yield 7.6257; //Münster
+            }
+            case 2 -> {
                 latitude = 53.5507;
-                longitude = 9.993;
-                break;
-            case 3: //Bayern
+                yield 9.993; //Hamburg
+            }
+            case 3 -> {
                 latitude = 47.795;
-                longitude = 12.5338;
-                break;
-            default: //Osnabrück
+                yield 12.5338; //Bayern
+            }
+            default -> {
                 latitude = 52.2726;
-                longitude = 8.0498;
-                break;
-        }
+                yield 8.0498; //Osnabrück
+            }
+        };
         return new Ort(latitude, longitude);
     }
 }
