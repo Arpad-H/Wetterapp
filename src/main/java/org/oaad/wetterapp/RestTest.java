@@ -13,6 +13,10 @@ public class RestTest {
     @Autowired
     private RestTemplate restTemplate;
 
+    /**
+     * This method sends a request to an API
+     * @return ResponseEntity<String> of the API response
+     */
     @GetMapping("/restTest")
     @ResponseBody
     public ResponseEntity<String> getJsonFromApi() {

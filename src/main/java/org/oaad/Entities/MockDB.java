@@ -4,9 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * MockDB class
+ * Represents a mock database for the application
+ * Used to simulate a database
+ * Used for testing purposes for the first increment
+ */
 public class MockDB {
     ArrayList<String> availableFeatures;
     Random random;
+
+    /**
+     * Constructor of the MockDB class
+     * Initializes the available features and the random object
+     */
     public MockDB(){
         random = new Random();
         availableFeatures = new ArrayList<>();
@@ -15,6 +26,13 @@ public class MockDB {
         availableFeatures.add("rain"); // Regen
         availableFeatures.add("cloud_cover"); // Wolken
     }
+
+    /**
+     * Returns a user with the given name
+     * contains random data for the settings and the orte
+     * @param name Name of the user
+     * @return Benutzer object
+     */
     public Benutzer getUser(String name){
         HashMap<String, Boolean> settings = new HashMap<>();
         for(String avaiableFeature : availableFeatures){
@@ -33,6 +51,12 @@ public class MockDB {
         return new Benutzer(name, settings, orte);
     }
 
+    /**
+     * Returns a Ort object for the given id
+     *
+     * @param ortId Id of the Ort
+     * @return Ort object
+     */
     public Ort getOrt(int ortId){
         double latitude, longitude;
         longitude = switch (ortId) {
