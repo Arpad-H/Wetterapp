@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * This class is responsible for calling the API and building the URL for the API.
  */
-@Component
 public class ApiCaller{
 
     private final RestTemplate restTemplate;
@@ -21,7 +20,6 @@ public class ApiCaller{
      * Constructor for the ApiCaller class
      * @param restTemplate RestTemplate object
      */
-    @Autowired
     public ApiCaller(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }

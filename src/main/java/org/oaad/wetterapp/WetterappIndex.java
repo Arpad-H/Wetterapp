@@ -62,7 +62,7 @@ public class WetterappIndex {
 
         ApiCaller api = new ApiCaller(restTemplate);
         model.addAttribute("weatherData", api.getJson(mockMap.get(user)));
-
+        System.out.println(api.getJson(mockMap.get(user)));
         return "user";
     }
 

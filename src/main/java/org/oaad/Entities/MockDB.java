@@ -34,21 +34,33 @@ public class MockDB {
      * @return Benutzer object
      */
     public Benutzer getUser(String name){
-        HashMap<String, Boolean> settings = new HashMap<>();
-        for(String avaiableFeature : availableFeatures){
-            settings.put(avaiableFeature, random.nextBoolean());
+
+        switch(name){
+            case "Jan":
+                /*return new Benutzer("Jan", )
+                break;*/
+            case "Arpad":
+                //break;
+            case "Alex" :
+                //break;
+            default:
+                HashMap<String, Boolean> settings = new HashMap<>();
+                for(String availableFeature : availableFeatures){
+                    settings.put(availableFeature, random.nextBoolean());
+                }
+                ArrayList<Ort> orte = new ArrayList<>();
+                int randomId = random.nextInt(4);
+                orte.add(getOrt(randomId));
+                if(random.nextBoolean()){
+                    int newRandomId;
+                    do{
+                        newRandomId = random.nextInt(4);
+                    }while(newRandomId == randomId);
+                    orte.add(getOrt(newRandomId));
+                }
+                return new Benutzer(name, settings, orte);
+               // break;
         }
-        ArrayList<Ort> orte = new ArrayList<>();
-        int randomId = random.nextInt(4);
-        orte.add(getOrt(randomId));
-        if(random.nextBoolean()){
-            int newRandomId;
-            do{
-                newRandomId = random.nextInt(4);
-            }while(newRandomId == randomId);
-            orte.add(getOrt(newRandomId));
-        }
-        return new Benutzer(name, settings, orte);
     }
 
     /**
