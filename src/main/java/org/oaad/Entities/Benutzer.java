@@ -9,10 +9,15 @@ import java.util.HashMap;
  * Contains the name, settings and orte of the user
  */
 public class Benutzer {
+
     String name;
     HashMap<String, Boolean> settings;
     ArrayList<Ort> orte;
 
+    public Benutzer() {
+          this.orte = new ArrayList<>();
+          this.settings = new HashMap<>();
+    }
     /**
      * Constructor of the Benutzer class
      * @param name Name of the user
@@ -34,7 +39,14 @@ public class Benutzer {
         this.settings = settings;
         this.orte = orte;
     }
-
+public boolean userHasOrt(Ort ort){
+        for (Ort o : orte){
+            if (o.getPlace_name().equals(ort.getPlace_name())){
+                return true;
+            }
+        }
+        return false;
+}
     /**
      * Getter for the orte
      * @return ArrayList of the orte
@@ -53,14 +65,6 @@ public class Benutzer {
 
     /**
      * Getter for the name
-     * @param name String value of the name
-     */
-    public Benutzer(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Getter for the name
      * @return String value of the name
      */
     public String getName() {
@@ -71,8 +75,9 @@ public class Benutzer {
      * Setter for the name
      * @param name String value of the name
      */
-    public void setName(String name) {
+    public Benutzer setName(String name) {
         this.name = name;
+        return this;
     }
 
     /**
@@ -90,4 +95,14 @@ public class Benutzer {
     public void setSettings(HashMap<String, Boolean> settings) {
         this.settings = settings;
     }
+
+    public Benutzer addOrt(Ort ort){
+        this.orte.add(ort);
+        return this;
+    }
+    public Benutzer addSetting(String setting, Boolean value){
+        this.settings.put(setting, value);
+        return this;
+    }
+
 }

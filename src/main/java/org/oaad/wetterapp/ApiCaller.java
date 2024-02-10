@@ -35,13 +35,13 @@ public class ApiCaller{
 
         apiUrl.append("latitude=");
         for(Ort ort : user.getOrte()){
-            apiUrl.append(ort.getLatitude()).append(",");
+            apiUrl.append(ort.getCoordinates().getFirst()).append(",");
         }
         apiUrl.deleteCharAt(apiUrl.lastIndexOf(","));
 
         apiUrl.append("&longitude=");
         for(Ort ort : user.getOrte()){
-            apiUrl.append(ort.getLongitude()).append(",");
+            apiUrl.append(ort.getCoordinates().getSecond()).append(",");
         }
         apiUrl.deleteCharAt(apiUrl.lastIndexOf(","));
 

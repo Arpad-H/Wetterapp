@@ -5,21 +5,22 @@
     <title>Thyme Test App</title>
 </head>
 <body>
-    <h1 th:text = "'This is the Message: '+ ${message} "></h1>
+    <h1 >Welcome to the Company Weather Service</h1>
+    <h3>Choose a User to Display Weather Data</h3>
     <label for="user">Choose a User:</label>
 
     <select name="user" id="user">
-        <option value="Jan">Jan</option>
-        <option value="Alex">Alex</option>
-        <option value="Arpad">Arpad</option>
+        <option th:each="user : ${users}" th:value="${user.name}" th:text="${user.name}"></option>
     </select>
     <button onclick="submitForm()">Load User</button>
+
 
     <script>
         function submitForm() {
             var selectedUser = document.getElementById("user").value;
             window.location.href = "/user?user=" + selectedUser;
         }
+
     </script>
 </body>
 </html>

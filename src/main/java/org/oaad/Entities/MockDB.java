@@ -1,8 +1,9 @@
 package org.oaad.Entities;
 
+import org.oaad.helperClasses.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * MockDB class
@@ -10,89 +11,93 @@ import java.util.Random;
  * Used to simulate a database
  * Used for testing purposes for the first increment
  */
+
 public class MockDB {
-    ArrayList<String> availableFeatures;
-    Random random;
+    HashMap<String, Benutzer> users = new HashMap<>();
+
+    HashMap<Pair<Double, Double>, Ort> places = new HashMap<>();
 
     /**
      * Constructor of the MockDB class
-     * Initializes the available features and the random object
+     * Initializes the mock database with some users and their settings
      */
-    public MockDB(){
-        random = new Random();
-        availableFeatures = new ArrayList<>();
-        availableFeatures.add("temperature_2m"); // Temperatur
-        availableFeatures.add("apparent_temperature"); // gefühlte Temperatur
-        availableFeatures.add("rain"); // Regen
-        availableFeatures.add("cloud_cover"); // Wolken
+    public MockDB() {
+
+        Ort osnabrueck = new Ort(new Pair<>(52.2726, 8.0498), "Osnabrück");//Osnabrück
+        Ort muenster = new Ort(new Pair<>(51.9624, 7.6257), "Münster");//Münster
+        Ort hamburg = new Ort(new Pair<>(53.5507, 9.993), "Hamburg");//Hamburg
+        Ort berlin = new Ort(new Pair<>(52.5244, 13.4105), "Berlin");//Berlin
+        places.put(osnabrueck.getCoordinates(), osnabrueck);
+        places.put(muenster.getCoordinates(),muenster);
+        places.put(hamburg.getCoordinates(),hamburg);
+        places.put(berlin.getCoordinates(), berlin);
+
+        users.put("Jan", new Benutzer()
+                .setName("Jan")
+                .addOrt(osnabrueck)
+                .addOrt(muenster)
+                .addOrt(hamburg)
+                .addSetting("temperature_2m", true)
+                .addSetting("apparent_temperature", true)
+                .addSetting("cloud_cover", false)
+                .addSetting("rain", false));
+        users.put("Alex", new Benutzer()
+                .setName("Alex")
+                .addOrt(hamburg)
+                .addOrt(osnabrueck)
+                .addSetting("temperature_2m", false)
+                .addSetting("apparent_temperature", true)
+                .addSetting("cloud_cover", false)
+                .addSetting("rain", false));
+        users.put("Arpad", new Benutzer()
+                .setName("Arpad")
+                .addOrt(osnabrueck)
+                .addOrt(muenster)
+                .addOrt(hamburg)
+                .addOrt(berlin)
+                .addSetting("temperature_2m", true)
+                .addSetting("apparent_temperature", true)
+                .addSetting("cloud_cover", true)
+                .addSetting("rain", true));
     }
 
     /**
-     * Returns a user with the given name
-     * contains random data for the settings and the orte
-     * @param name Name of the user
-     * @return Benutzer object
-     */
-    public Benutzer getUser(String name){
-
-        switch(name){
-            case "Jan":
-                /*return new Benutzer("Jan", )
-                break;*/
-            case "Arpad":
-                //break;
-            case "Alex" :
-                //break;
-            default:
-                HashMap<String, Boolean> settings = new HashMap<>();
-                for(String availableFeature : availableFeatures){
-                    settings.put(availableFeature, random.nextBoolean());
-                }
-                ArrayList<Ort> orte = new ArrayList<>();
-                int randomId = random.nextInt(4);
-                orte.add(getOrt(randomId));
-                if(random.nextBoolean()){
-                    int newRandomId;
-                    do{
-                        newRandomId = random.nextInt(4);
-                    }while(newRandomId == randomId);
-                    orte.add(getOrt(newRandomId));
-                }
-                return new Benutzer(name, settings, orte);
-               // break;
-        }
-    }
-
-    /**
-     * Returns a Ort object for the given id
+     * Getter for a specific user
      *
-     * @param ortId Id of the Ort
-     * @return Ort object
+     * @param name Name of the user
+     * @return Benutzer object of the user
      */
-    public Ort getOrt(int ortId){
-        double latitude, longitude;
-        longitude = switch (ortId) {
-            case 0 -> {
-                latitude = 52.2726;
-                yield 8.0498; // Osnabrück
+    public Benutzer getUser(String name) {
+        return users.get(name);
+    }
+
+    /**
+     * Getter for all users
+     *
+     * @return ArrayList of all users
+     */
+    public ArrayList<Benutzer> getAllUsers() {
+        return new ArrayList<>(users.values());
+    }
+
+    public String getPlace(double latitude, double longitude) {
+        for (Pair<Double, Double> key : places.keySet()) {
+            if (key.getFirst() < latitude + 0.1 && key.getFirst() > latitude - 0.1 && key.getSecond() < longitude + 0.1 && key.getSecond() > longitude - 0.1) {
+                return places.get(key).getPlace_name();
             }
-            case 1 -> {
-                latitude = 51.9624;
-                yield 7.6257; //Münster
+        }
+        return "Unknown";
+
+    }
+    public void addPlace(Pair<Double, Double> coordinates, String place_name) {
+        places.put(coordinates, new Ort(coordinates, place_name));
+    }
+    public Ort placeExists(String name){
+        for (Pair<Double, Double> key : places.keySet()) {
+            if (places.get(key).getPlace_name().equals(name)) {
+                return places.get(key);
             }
-            case 2 -> {
-                latitude = 53.5507;
-                yield 9.993; //Hamburg
-            }
-            case 3 -> {
-                latitude = 47.795;
-                yield 12.5338; //Bayern
-            }
-            default -> {
-                latitude = 52.2726;
-                yield 8.0498; //Osnabrück
-            }
-        };
-        return new Ort(latitude, longitude);
+        }
+        return null;
     }
 }

@@ -3,9 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title th:text = "${user}"></title>
+    <style>
+        #weather {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #weather td, #weather th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #weather tr:nth-child(even){background-color: #f2f2f2;}
+
+        #weather tr:hover {background-color: #ddd;}
+
+        #weather th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-<h1 th:text = "'This is the User: '+ ${user} "></h1>
+
+
+<h1 th:text = "'Displaying Data for: '+ ${user} "></h1>
 <label for="user">Choose a User:</label>
 
 <select name="user" id="user">
@@ -22,5 +48,82 @@
     }
 </script>
 <h3>Hier Orte Auflisten </h3>
+<table id="weather">
+    <thead>
+    <tr>
+        <th>Place</th>
+        <th th:each="field : ${fields}" th:if="${field.getValue()}"  th:text="${field.key}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="data : ${apiData}">
+        <td th:text="${data.getPlace_name()} "></td>
+        <td th:if="${data.current_units.getTemperature_2m() != null}" th:text="${data.current.getTemperature_2m()}+${data.current_units.getTemperature_2m()}"></td>
+        <td th:if="${data.current_units.getRain() != null}" th:text="${data.current.getRain()}+${data.current_units.getRain()}"></td>
+        <td th:if="${data.current_units.getCloud_cover()!= null}" th:text="${data.current.getCloud_cover()}+${data.current_units.getCloud_cover()}"></td>
+        <td th:if="${data.current_units.getApparent_temperature() != null}" th:text="${data.current.getApparent_temperature()}+${data.current_units.getApparent_temperature()}"></td>
+
+    </tr>
+    </tbody>
+</table>
+<button  id="addPlaceBtn" onclick="addPlace()">Add Place</button>
+<script th:inline="javascript">
+    var user = /*[[ ${user} ]]*/ '';
+    function addPlace() {
+        var form = document.createElement("form");
+        var textBox = document.createElement("div");
+        textBox.textContent = "Instructions: Head over to https://open-meteo.com/en/docs/ and search for the Location you want to add. Fill in the longitude and latitude fields according to Open-Meteo and click submit.";
+        textBox.style.backgroundColor = "#64b9f5";
+        textBox.style.padding = "10px";
+        textBox.style.marginTop = "10px";
+        form.appendChild(textBox);
+
+        // Create latitude input
+        var userID = document.createElement("input");
+        userID.setAttribute("type","hidden")
+        userID.setAttribute("name", "user");
+        userID.setAttribute("value", user);
+        form.appendChild(userID);
+        var latitudeInput = document.createElement("input");
+        latitudeInput.setAttribute("type", "text");
+        latitudeInput.setAttribute("name", "latitude");
+        latitudeInput.setAttribute("id", "latitude");
+        latitudeInput.setAttribute("placeholder", "Latitude");
+        form.appendChild(latitudeInput);
+        // Create longitude input
+        var longitudeInput = document.createElement("input");
+        longitudeInput.setAttribute("type", "text");
+        longitudeInput.setAttribute("name", "longitude");
+        longitudeInput.setAttribute("id", "longitude");
+        longitudeInput.setAttribute("placeholder", "Longitude");
+        form.appendChild(longitudeInput);
+        // Create name input
+        var nameInput = document.createElement("input");
+        nameInput.setAttribute("type", "text");
+        nameInput.setAttribute("name", "place_name");
+        nameInput.setAttribute("id", "place_name");
+        nameInput.setAttribute("placeholder", "Name of the Place");
+        form.appendChild(nameInput);
+
+        // Create submit button
+        var submitButton = document.createElement("input");
+        submitButton.setAttribute("type", "submit");
+        submitButton.setAttribute("value", "Submit");
+        form.appendChild(submitButton);
+
+        var cancelButton = document.createElement("button");
+        cancelButton.textContent = "Cancel";
+        cancelButton.onclick = function () {
+            document.getElementById("addPlaceBtn").style.display = "block";
+            document.body.removeChild(form); // Remove the form when cancel button is clicked
+        };
+        form.appendChild(cancelButton);
+
+        // Append the form to the page
+        document.body.appendChild(form);
+        document.getElementById("addPlaceBtn").style.display = "none";
+    }
+
+</script>
 </body>
 </html>
