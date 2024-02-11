@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Objects;
 
@@ -19,7 +18,7 @@ import java.util.Objects;
  * This class is the main controller of the application. It handles the requests and responses of the application.
  */
 @Controller
-public class WetterappIndex {
+public class WetterappController {
 
     private final MockDB mockDB = new MockDB();
 
@@ -33,8 +32,8 @@ public class WetterappIndex {
      * @param model Model of the application
      * @return String value of the index pages name
      */
-    @GetMapping("/index")
-    public String ThymeTest(Model model) {
+    @GetMapping(value={"/index", "/"})
+    public String Thyme(Model model) {
         model.addAttribute("users", mockDB.getAllUsers());
         return "index";
     }
@@ -79,5 +78,4 @@ public class WetterappIndex {
         model.addAttribute("apiData", weatherData);
         return "user";
     }
-
 }
