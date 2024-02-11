@@ -21,7 +21,7 @@ import java.util.Objects;
  * This class is the main controller of the application. It handles the requests and responses of the application.
  */
 @Controller
-public class WetterappIndex {
+public class WetterappController {
 
     private final MockDB mockDB = new MockDB();
 
@@ -35,8 +35,8 @@ public class WetterappIndex {
      * @param model Model of the application
      * @return String value of the index pages name
      */
-    @GetMapping("/index")
-    public String Index(Model model) {
+    @GetMapping(value={"/index", "/"})
+    public String Thyme(Model model) {
         model.addAttribute("users", mockDB.getAllUsers());
         return "index";
     }
