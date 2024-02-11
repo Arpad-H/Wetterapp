@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -34,7 +36,7 @@ public class WetterappIndex {
      * @return String value of the index pages name
      */
     @GetMapping("/index")
-    public String ThymeTest(Model model) {
+    public String Index(Model model) {
         model.addAttribute("users", mockDB.getAllUsers());
         return "index";
     }
@@ -67,7 +69,7 @@ public class WetterappIndex {
         Gson gson = new Gson();
 
         model.addAttribute("user", mockDB.getUser(user).getName());
-
+        model.addAttribute("users", mockDB.getAllUsers());
         ApiCaller api = new ApiCaller(restTemplate);
         String jsonString = api.getJson(mockDB.getUser(user)).getBody();
         System.out.println(jsonString);
@@ -78,6 +80,28 @@ public class WetterappIndex {
         model.addAttribute("fields", mockDB.getUser(user).getSettings());
         model.addAttribute("apiData", weatherData);
         return "user";
+    }
+    @GetMapping("/settings")
+    public String Settings(@RequestParam(value = "user", defaultValue = "") String user, Model model) {
+        if (user.isEmpty()) {
+            return "index";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("user_fields", mockDB.getUser(user).getSettings());
+        model.addAttribute("user_places", mockDB.getUser(user).getOrte());
+        model.addAttribute("all_fields", mockDB.getSettings());
+        model.addAttribute("all_places", mockDB.getPlaces());
+        return "settings";
+    }
+    @PostMapping("/submit")
+    public String changeSettings(@RequestParam Map<String, String> formData) {
+
+        for (Map.Entry<String, String> entry : formData.entrySet()) {
+            System.out.println("Name: " + entry.getKey() + ", Value: " + entry.getValue());
+          //  mockDB
+        }
+       // return "index";
+       return "redirect:/user?user=" +formData.get("user");
     }
 
 }

@@ -33,18 +33,20 @@
 
 <h1 th:text = "'Displaying Data for: '+ ${user} "></h1>
 <label for="user">Choose a User:</label>
-
 <select name="user" id="user">
-    <option value="Jan">Jan</option>
-    <option value="Alex">Alex</option>
-    <option value="Arpad">Arpad</option>
+    <option th:each="user : ${users}" th:value="${user.name}" th:text="${user.name}"></option>
 </select>
 <button onclick="submitForm()">Load User</button>
+<button onclick="changeSettings()">Change Settings</button>
 
 <script>
     function submitForm() {
         var selectedUser = document.getElementById("user").value;
         window.location.href = "/user?user=" + selectedUser;
+    }
+    function changeSettings() {
+        var selectedUser = document.getElementById("user").value;
+        window.location.href = "/settings?user=" + selectedUser;
     }
 </script>
 <h3>Hier Orte Auflisten </h3>

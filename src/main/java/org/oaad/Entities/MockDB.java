@@ -16,6 +16,14 @@ public class MockDB {
     HashMap<String, Benutzer> users = new HashMap<>();
 
     HashMap<Pair<Double, Double>, Ort> places = new HashMap<>();
+    HashMap<String, Boolean> settings = new HashMap<>();
+    public HashMap<Pair<Double, Double>, Ort> getPlaces() {
+        return places;
+    }
+
+    public HashMap<String, Boolean> getSettings() {
+        return settings;
+    }
 
     /**
      * Constructor of the MockDB class
@@ -59,6 +67,12 @@ public class MockDB {
                 .addSetting("apparent_temperature", true)
                 .addSetting("cloud_cover", true)
                 .addSetting("rain", true));
+
+        settings.put("temperature_2m", true);
+        settings.put("apparent_temperature", true);
+        settings.put("cloud_cover", true);
+        settings.put("rain", true);
+
     }
 
     /**
