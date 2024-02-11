@@ -39,14 +39,26 @@ public class Benutzer {
         this.settings = settings;
         this.orte = orte;
     }
-public boolean userHasOrt(Ort ort){
+
+    /**
+     * Checks if the user has a specific ort
+     * @param ort Ort to check
+     * @return true if the user has the ort, false if not
+     */
+    public boolean userHasOrt(Ort ort){
         for (Ort o : orte){
             if (o.getPlace_name().equals(ort.getPlace_name())){
                 return true;
             }
         }
         return false;
-}
+    }
+
+    /**
+     * Checks if the user has a specific ort
+     * @param name Name of the ort to check
+     * @return true if the user has the ort, false if not
+     */
     public boolean userHasOrt(String name) {
         for (Ort o : orte) {
             if (o.getPlace_name().equals(name)) {
@@ -59,51 +71,33 @@ public boolean userHasOrt(Ort ort){
     public void removeOrt(String name) {
         orte.removeIf(ort -> ort.getPlace_name().equals(name));
     }
-    /**
-     * Getter for the orte
-     * @return ArrayList of the orte
-     */
+
     public ArrayList<Ort> getOrte() {
         return orte;
     }
 
-    /**
-     * Setter for the orte
-     * @param orte ArrayList of the orte
-     */
+
     public void setOrte(ArrayList<Ort> orte) {
         this.orte = orte;
     }
 
-    /**
-     * Getter for the name
-     * @return String value of the name
-     */
+
     public String getName() {
         return name;
     }
 
-    /**
-     * Setter for the name
-     * @param name String value of the name
-     */
+
     public Benutzer setName(String name) {
         this.name = name;
         return this;
     }
 
-    /**
-     * Getter for the settings
-     * @return HashMap of the settings
-     */
+
     public HashMap<String, Boolean> getSettings() {
         return settings;
     }
 
-    /**
-     * Setter for the settings
-     * @param settings HashMap of the settings
-     */
+
     public void setSettings(HashMap<String, Boolean> settings) {
         this.settings = settings;
     }

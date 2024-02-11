@@ -2,6 +2,11 @@ package org.oaad.helperClasses;
 
 import java.util.Objects;
 
+/**
+ * Represents a tuple of two objects
+ * @param <A> Type of the first object
+ * @param <B> Type of the second object
+ */
 public class Pair<A, B> {
     private final A first;
     private final B second;

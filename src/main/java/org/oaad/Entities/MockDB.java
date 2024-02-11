@@ -10,24 +10,20 @@ import java.util.HashMap;
  * Represents a mock database for the application
  * Used to simulate a database
  * Used for testing purposes for the first increment
+ * later replaced by a real database
  */
 
 public class MockDB {
     HashMap<String, Benutzer> users = new HashMap<>();
-
     HashMap<Pair<Double, Double>, Ort> places = new HashMap<>();
     HashMap<String, Boolean> settings = new HashMap<>();
     public HashMap<Pair<Double, Double>, Ort> getPlaces() {
         return places;
     }
 
-    public HashMap<String, Boolean> getSettings() {
-        return settings;
-    }
-
     /**
      * Constructor of the MockDB class
-     * Initializes the mock database with some users and their settings
+     * Initializes the mock database with Fake users and their settings
      */
     public MockDB() {
 
@@ -75,25 +71,22 @@ public class MockDB {
 
     }
 
-    /**
-     * Getter for a specific user
-     *
-     * @param name Name of the user
-     * @return Benutzer object of the user
-     */
+
     public Benutzer getUser(String name) {
         return users.get(name);
     }
 
-    /**
-     * Getter for all users
-     *
-     * @return ArrayList of all users
-     */
+
     public ArrayList<Benutzer> getAllUsers() {
         return new ArrayList<>(users.values());
     }
 
+    /**
+     * Gets the Place of the given coordinates
+     * @param latitude latitude of the place
+     * @param longitude longitude of the place
+     * @return String name of the place
+     */
     public String getPlace(double latitude, double longitude) {
         for (Pair<Double, Double> key : places.keySet()) {
             if (key.getFirst() < latitude + 0.1 && key.getFirst() > latitude - 0.1 && key.getSecond() < longitude + 0.1 && key.getSecond() > longitude - 0.1) {
@@ -124,5 +117,8 @@ public class MockDB {
             }
         }
         return null;
+    }
+    public HashMap<String, Boolean> getSettings() {
+        return settings;
     }
 }

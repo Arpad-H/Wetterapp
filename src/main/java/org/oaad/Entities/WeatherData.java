@@ -1,5 +1,9 @@
 package org.oaad.Entities;
 
+/**
+ * CurrentUnits class
+ * Used to store the units of the current weather f.e. °C, %, etc.
+ */
 class CurrentUnits {
     private String time;
     private String interval;
@@ -56,7 +60,10 @@ class CurrentUnits {
         this.apparent_temperature = apparent_temperature;
     }
 }
-
+/**
+ * Current class
+ * Used to store the current weather datas numerical values
+ */
 class Current {
     private String time;
     private int interval;
@@ -116,6 +123,11 @@ class Current {
 
 
 }
+
+/**
+ * WeatherData class
+ * Used to store the weather data of a location
+ */
 public class WeatherData {
     private double latitude;
     private double longitude;
