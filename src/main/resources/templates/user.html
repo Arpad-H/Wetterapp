@@ -39,17 +39,7 @@
 <button onclick="submitForm()">Load User</button>
 <button onclick="changeSettings()">Change Settings</button>
 
-<script>
-    function submitForm() {
-        var selectedUser = document.getElementById("user").value;
-        window.location.href = "/user?user=" + selectedUser;
-    }
-    function changeSettings() {
-        var selectedUser = document.getElementById("user").value;
-        window.location.href = "/settings?user=" + selectedUser;
-    }
-</script>
-<h3>Hier Orte Auflisten </h3>
+
 <table id="weather">
     <thead>
     <tr>
@@ -71,6 +61,13 @@
 <button  id="addPlaceBtn" onclick="addPlace()">Add Place</button>
 <script th:inline="javascript">
     var user = /*[[ ${user} ]]*/ '';
+    function submitForm() {
+        var selectedUser = document.getElementById("user").value;
+        window.location.href = "/user?user=" + selectedUser;
+    }
+    function changeSettings() {
+        window.location.href = "/settings?user=" + user;
+    }
     function addPlace() {
         var form = document.createElement("form");
         var textBox = document.createElement("div");

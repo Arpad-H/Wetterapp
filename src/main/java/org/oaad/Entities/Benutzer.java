@@ -47,6 +47,18 @@ public boolean userHasOrt(Ort ort){
         }
         return false;
 }
+    public boolean userHasOrt(String name) {
+        for (Ort o : orte) {
+            if (o.getPlace_name().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    public void removeOrt(String name) {
+        orte.removeIf(ort -> ort.getPlace_name().equals(name));
+    }
     /**
      * Getter for the orte
      * @return ArrayList of the orte

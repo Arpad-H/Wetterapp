@@ -103,6 +103,17 @@ public class MockDB {
         return "Unknown";
 
     }
+    public Ort getPlace(String name) {
+        for (Pair<Double, Double> key : places.keySet()) {
+            if (places.get(key).getPlace_name().equals(name)) {
+                return places.get(key);
+            }
+        }
+        return null;
+
+
+    }
+
     public void addPlace(Pair<Double, Double> coordinates, String place_name) {
         places.put(coordinates, new Ort(coordinates, place_name));
     }

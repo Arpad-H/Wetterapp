@@ -12,15 +12,15 @@
 <h4>Choose the Fields to Display</h4>
 <form th:action="@{/submit}"  method="post">
     <div th:each="field : ${all_fields}">
-        <input th:id="${field.getKey()}" type="checkbox" th:name="${field.getKey()}" th:checked="${#lists.contains(all_fields.values(), field) and #lists.contains(user_fields, field)}" th:text="${field.getKey()}">
-        <input type="hidden" th:name="${field.getKey()}" th:value="off" th:unless="${user_fields.get(field)}">
+        <input th:id="${field.getKey()}" type="checkbox" th:name="'settings_'+${field.getKey()}" th:checked="${user_fields.get( field.getKey())}" th:text="${field.getKey()}">
+        <input type="hidden" th:name="'settings_' + ${field.getKey()}" th:value="off" th:unless="${user_fields.get(field)}">
         <br>
     </div>
     <br>
     <h4>Choose the Places to Display</h4>
     <div th:each="place : ${all_places.values()}">
         <input th:id="${place.getPlace_name()}" type="checkbox" th:name="'place_' + ${place.getPlace_name()}" th:checked="${#lists.contains(all_places.values(), place) and #lists.contains(user_places, place)}" th:text="${place.getPlace_name()}">
-        <input type="hidden" th:name="'place_' + ${place.getPlace_name()}" th:value="off" th:unless="${#lists.contains(user_places, place)}">
+        <input type="hidden" th:name="'place_' + ${place.getPlace_name()}" th:value="off" th:unless="${!#lists.contains(user_places, place)}">
         <br>
     </div>
     <input th:id="${user}" type="hidden" name="user" th:value="${user}">

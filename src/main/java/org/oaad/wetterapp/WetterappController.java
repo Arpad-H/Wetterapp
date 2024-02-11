@@ -35,7 +35,7 @@ public class WetterappController {
      * @param model Model of the application
      * @return String value of the index pages name
      */
-    @GetMapping(value={"/index", "/"})
+    @GetMapping(value = {"/index", "/"})
     public String Thyme(Model model) {
         model.addAttribute("users", mockDB.getAllUsers());
         return "index";
@@ -73,14 +73,25 @@ public class WetterappController {
         ApiCaller api = new ApiCaller(restTemplate);
         String jsonString = api.getJson(mockDB.getUser(user)).getBody();
         System.out.println(jsonString);
-        WeatherData[] weatherData = gson.fromJson(jsonString, WeatherData[].class);
-        for (WeatherData data : weatherData) {
-            data.setPlace_name(mockDB.getPlace(data.getLatitude(), data.getLongitude()));
+        if (jsonString.charAt(0) == '[') {
+            WeatherData[] weatherData = gson.fromJson(jsonString, WeatherData[].class);
+            for (WeatherData data : weatherData) {
+                data.setPlace_name(mockDB.getPlace(data.getLatitude(), data.getLongitude()));
+            }
+            model.addAttribute("fields", mockDB.getUser(user).getSettings());
+            model.addAttribute("apiData", weatherData);
+            return "user";
         }
-        model.addAttribute("fields", mockDB.getUser(user).getSettings());
-        model.addAttribute("apiData", weatherData);
-        return "user";
+        else {
+            WeatherData weatherData = gson.fromJson(jsonString, WeatherData.class);
+            weatherData.setPlace_name(mockDB.getPlace(weatherData.getLatitude(), weatherData.getLongitude()));
+            model.addAttribute("fields", mockDB.getUser(user).getSettings());
+            model.addAttribute("apiData", weatherData);
+            return "user";
+        }
+
     }
+
     @GetMapping("/settings")
     public String Settings(@RequestParam(value = "user", defaultValue = "") String user, Model model) {
         if (user.isEmpty()) {
@@ -93,15 +104,31 @@ public class WetterappController {
         model.addAttribute("all_places", mockDB.getPlaces());
         return "settings";
     }
+
     @PostMapping("/submit")
     public String changeSettings(@RequestParam Map<String, String> formData) {
 
         for (Map.Entry<String, String> entry : formData.entrySet()) {
             System.out.println("Name: " + entry.getKey() + ", Value: " + entry.getValue());
-          //  mockDB
+            if (entry.getKey().contains("settings_")) {
+                mockDB.getUser(formData.get("user")).getSettings().put(entry.getKey().substring(9), entry.getValue().equals("on"));
+            }
+            if (entry.getKey().contains("place_")) {
+                Ort ort = mockDB.getPlace(entry.getKey().substring(6));
+                if (entry.getValue().equals("on")) {
+                    if (!mockDB.getUser(formData.get("user")).userHasOrt(ort.getPlace_name())) {
+                        mockDB.getUser(formData.get("user")).addOrt(ort);
+                    }
+                } else if (entry.getValue().equals("off")) {
+                    if (mockDB.getUser(formData.get("user")).userHasOrt(ort.getPlace_name())) {
+                        mockDB.getUser(formData.get("user")).removeOrt(ort.getPlace_name());
+                    }
+                }
+            }
+
         }
-       // return "index";
-       return "redirect:/user?user=" +formData.get("user");
+        return "redirect:/user?user=" + formData.get("user");
     }
+
 
 }
