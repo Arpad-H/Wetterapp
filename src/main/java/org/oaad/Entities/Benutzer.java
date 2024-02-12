@@ -7,6 +7,7 @@ import java.util.HashMap;
  * Benutzer class
  * Represents a user of the application
  * Contains the name, settings and orte of the user
+ * @Author Jan Heitmeier
  */
 public class Benutzer {
 

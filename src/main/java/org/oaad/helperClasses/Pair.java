@@ -6,6 +6,7 @@ import java.util.Objects;
  * Represents a tuple of two objects
  * @param <A> Type of the first object
  * @param <B> Type of the second object
+ * @Author Arpad Horvath
  */
 public class Pair<A, B> {
     private final A first;

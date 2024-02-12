@@ -20,6 +20,7 @@ import java.util.Objects;
 
 /**
  * This class is the main controller of the application. It handles the requests and responses of the application.
+ * @author Arpad Horvath, Alexander Iwan
  */
 @Controller
 public class WetterappController {

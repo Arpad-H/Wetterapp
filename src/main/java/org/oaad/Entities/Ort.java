@@ -5,6 +5,7 @@ import org.oaad.helperClasses.Pair;
 /**
  * Ort class
  * Represents a location and the weather at that location
+ * @Author Jan Heitmeier
  */
 public class Ort {
     private Pair<Double, Double> coordinates;

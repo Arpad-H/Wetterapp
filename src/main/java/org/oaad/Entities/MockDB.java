@@ -11,6 +11,7 @@ import java.util.HashMap;
  * Used to simulate a database
  * Used for testing purposes for the first increment
  * later replaced by a real database
+ * @Author Arpad Horvath
  */
 
 public class MockDB {

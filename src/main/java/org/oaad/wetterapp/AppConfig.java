@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 
-
+/**
+ * This class is the main configuration class of the application. It contains the main method and the bean definitions.
+ * @Author Alexander Iwan
+ */
 @Configuration
 @ComponentScan
 public class AppConfig{

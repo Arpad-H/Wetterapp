@@ -3,6 +3,7 @@ package org.oaad.Entities;
 /**
  * CurrentUnits class
  * Used to store the units of the current weather f.e. °C, %, etc.
+ * @Author Arpad Horvath
  */
 class CurrentUnits {
     private String time;
